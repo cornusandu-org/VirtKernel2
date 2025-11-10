@@ -1,9 +1,20 @@
 #include "headers.hpp"
 #include "trace.hpp"
+#include <iostream>
 
 namespace trace {
     void trace_child(pid_t pid) {
         int status;
+
+        // Wait for the child to stop on exec
+        waitpid(pid, &status, 0);
+
+        // Set options for syscall tracing
+        ptrace(PTRACE_SETOPTIONS, pid, 0, PTRACE_O_TRACESYSGOOD);
+
+        // Start tracing syscalls
+        ptrace(PTRACE_SYSCALL, pid, nullptr, nullptr);
+
         while (true) {
             waitpid(pid, &status, 0);
             if (WIFEXITED(status)) break;
@@ -11,15 +22,9 @@ namespace trace {
             user_regs_struct regs{};
             ptrace(PTRACE_GETREGS, pid, nullptr, &regs);
 
-            long syscall = regs.orig_rax; // On x86-64
-
-            // Example: block write(1, ...) for demonstration
-            if (syscall == 1 && regs.rdi == 1) {
-                regs.orig_rax = -1; // fake invalid syscall
-                ptrace(PTRACE_SETREGS, pid, nullptr, &regs);
-            }
+            std::cout << "Syscall: " << regs.orig_rax << std::endl;
 
             ptrace(PTRACE_SYSCALL, pid, nullptr, nullptr);
         }
-    };
+    }
 }

@@ -12,16 +12,19 @@ build_x64: ./dist/linux_x64/main.exe
 	@echo "[+] x64 Build completed!\n"
 
 ./tmp/trace.o:
+	@mkdir -p ./tmp
 	@printf "[/] Building trace.o\r"
 	@g++ ./src/userspace/trace.cpp -fPIC -o ./tmp/trace.o -O2 $(additionalargs) $(compileonly)
 	@echo "[+] Built trace.o                "
 
 ./tmp/main.o:
+	@mkdir -p ./tmp
 	@printf "[/] Building main.o (x64)\r"
 	@g++ ./src/main.cpp -O2 -o ./tmp/main.o $(additionalargs) $(compileonly)
 	@printf "[+] Built main.o (x64)                \n"
 
 ./tmp/runproc.o:
+	@mkdir -p ./tmp
 	@printf "[/] Building runproc.o (x64)\r"
 	@g++ ./src/userspace/runproc.cpp -O2 -o ./tmp/runproc.o $(additionalargs) $(compileonly)
 	@printf "[+] Built runproc.o (x64)                \n"
