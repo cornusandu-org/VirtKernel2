@@ -1,7 +1,5 @@
 #pragma once
 
-#define LINUX_HEADERS_IMPORTED
-
 #include <iostream>         // C++ standard I/O
 #include <fstream>          // C++ file streams
 #include <string>           // C++ string handling
@@ -56,9 +54,5 @@
 #define EXIT_DEBUG1 17
 #define EXIT_DEBUG2 18
 #define EXIT_DEBUG3 19
-#define EXIT_PANIC 20
-#define EXIT_FORCED 21  // SIGTERM / SIGILL
-#define EXIT_REQUESTED 22  // SIGINT / SIGQUIT / SIGTSTP
-#define EXIT_TERMINATED_BY_KERNEL 23  // SIGXCPU / SIGXFSZ / SIGSYS
 
 #define DEBUG_BUILD false
