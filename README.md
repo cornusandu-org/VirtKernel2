@@ -15,7 +15,7 @@ First functional and tested build. Still a debug build (contains debug messages 
 To build the project yourself, just run:
 ```bash
 make clean
-make build
+make build -j$(nproc)
 ```
 Please note that you will need to have the GNU compiler set (`g++`, `gcc` etc.) installed (`build-essential`). If you do not wish to install it, please use Docker for building.
 ### Docker

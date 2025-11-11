@@ -3,7 +3,7 @@
 #include "runproc.hpp"
 #include <string>
 
-void runproc(const char* const path) {
+void runproc(const char* const path, pid_t* out_pid) {
     pid_t pid = fork();
     if (pid == 0) {
         std::cerr << "Pid 0\n";
@@ -12,7 +12,12 @@ void runproc(const char* const path) {
         perror("execl failed");   // <— add this
         exit(1);
     } else {
+        if (out_pid != nullptr) {
+            *out_pid = pid;
+        }
         std::cerr << "PID != 0\n";
         trace::trace_child(pid);
     }
+
+    return;
 }

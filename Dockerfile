@@ -22,4 +22,4 @@ COPY ./src ./src
 COPY ./Makefile ./Makefile
 
 
-RUN make clean && make build
+RUN make clean && make build -j$(nproc)

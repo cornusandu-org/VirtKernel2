@@ -34,6 +34,7 @@
 #include <sys/utsname.h>    // System information
 #include <sys/ptrace.h>
 #include <sys/user.h>
+#include <sys/uio.h>
 
 // Networking
 #include <netinet/in.h>     // Internet address family
@@ -46,13 +47,5 @@
 #include <linux/unistd.h>   // Linux syscall numbers
 #include <sys/syscall.h>
 #include <dlfcn.h>
-
-
-#define EXIT_SEG_FAULT 139  // SIGSEGV / SIGBUS / SIGPIPE
-#define EXIT_NO_SO 15
-#define EXIT_DEBUG0 16
-#define EXIT_DEBUG1 17
-#define EXIT_DEBUG2 18
-#define EXIT_DEBUG3 19
 
 #define DEBUG_BUILD false

@@ -29,7 +29,25 @@ build_x64: ./dist/linux_x64/main.exe
 	@g++ ./src/userspace/runproc.cpp -O2 -o ./tmp/runproc.o $(additionalargs) $(compileonly)
 	@printf "[+] Built runproc.o (x64)                \n"
 
-./dist/linux_x64/main.exe: ./tmp/main.o ./tmp/trace.o ./tmp/runproc.o
+./tmp/startup.o:
+	@mkdir -p ./tmp
+	@printf "[/] Building startup.o (x64)\r"
+	@g++ ./src/startup.cpp -O2 -o ./tmp/startup.o $(additionalargs) $(compileonly)
+	@printf "[+] Built startup.o (x64)                \n"
+
+./tmp/exit_.o:
+	@mkdir -p ./tmp
+	@printf "[/] Building exit_handler.o (x64)\r"
+	@g++ ./src/exit_.cpp -O2 -o ./tmp/exit_handler.o $(additionalargs) $(compileonly)
+	@printf "[+] Built exit_handler.o (x64)                \n"
+
+./tmp/procmanager.o:
+	@mkdir -p ./tmp
+	@printf "[/] Building procmanger.o (x64)\r"
+	@g++ ./src/userspace/procmanager.cpp -O2 -o ./tmp/procmanager.o $(additionalargs) $(compileonly)
+	@printf "[+] Built procmanger.o (x64)                \n"
+
+./dist/linux_x64/main.exe: ./tmp/main.o ./tmp/trace.o ./tmp/runproc.o ./tmp/exit_.o ./tmp/startup.o ./tmp/procmanager.o
 	@printf "[/] Linking main.exe (x64)\r"
 	@g++ ./tmp/*.o -o ./dist/linux_x64/main.exe -O2
 	@printf "[+] Linked main.exe (x64)                \n"
@@ -42,6 +60,5 @@ clean:
 	@rm -rf ./tmp/*.o
 	@mkdir ./dist/linux_x64
 
-rebuild:
-	@make clean
+rebuild: clean
 	@make build
