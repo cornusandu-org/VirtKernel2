@@ -1,7 +1,25 @@
-FROM kali-rolling AS base
+# Use the official Kali Linux rolling image
+FROM debian:bookworm-slim AS base
 
-COPY . .
+FROM base AS setup
 
-apt-get install build-essential -y
-apt-get install g++-multilib -y
-make rebuild
+WORKDIR /app
+
+RUN apt-get update --fix-missing
+RUN apt-get install -y --no-install-recommends make --fix-missing
+RUN apt-get install -y --no-install-recommends build-essential --fix-missing
+
+RUN mkdir ./tmp
+RUN mkdir -p ./dist/linux_x64
+
+FROM setup AS build
+
+WORKDIR /app
+
+# Copy project files
+COPY ./include ./include
+COPY ./src ./src
+COPY ./Makefile ./Makefile
+
+
+RUN make clean && make build -j$(nproc)

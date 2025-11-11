@@ -1,7 +1,5 @@
 #pragma once
 
-#define LINUX_HEADERS_IMPORTED
-
 #include <iostream>         // C++ standard I/O
 #include <fstream>          // C++ file streams
 #include <string>           // C++ string handling
@@ -36,6 +34,7 @@
 #include <sys/utsname.h>    // System information
 #include <sys/ptrace.h>
 #include <sys/user.h>
+#include <sys/uio.h>
 
 // Networking
 #include <netinet/in.h>     // Internet address family
@@ -48,17 +47,5 @@
 #include <linux/unistd.h>   // Linux syscall numbers
 #include <sys/syscall.h>
 #include <dlfcn.h>
-
-
-#define EXIT_SEG_FAULT 139  // SIGSEGV / SIGBUS / SIGPIPE
-#define EXIT_NO_SO 15
-#define EXIT_DEBUG0 16
-#define EXIT_DEBUG1 17
-#define EXIT_DEBUG2 18
-#define EXIT_DEBUG3 19
-#define EXIT_PANIC 20
-#define EXIT_FORCED 21  // SIGTERM / SIGILL
-#define EXIT_REQUESTED 22  // SIGINT / SIGQUIT / SIGTSTP
-#define EXIT_TERMINATED_BY_KERNEL 23  // SIGXCPU / SIGXFSZ / SIGSYS
 
 #define DEBUG_BUILD false
